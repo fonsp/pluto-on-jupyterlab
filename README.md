@@ -1,12 +1,12 @@
-# pluto-on-jupyterlab: An extension to add JupyterLab with Pluto
+# pluto-on-jupyterlab: an extension to use Pluto from within JupyterLab
 
-For instructions on how to install a Pluto.jl server based on JupyterLab,
-see @koehlerson detailed guide: https://www.maximiliankoehler.de/posts/pluto-server/
+This small package informs JupyterLab on how to **start** Pluto and exposes the `/pluto` endpoint.
 
-That will help you install JupyterLab, JupyterHub and Pluto on one of your servers,
-as well as add users that will have access to JupyterHub.
+That is useful because you can use your existing JupyterLab infrastructure and use pluto with
+existing authentication/deployment settings!!
 
-# How to add this extension in an existing installation of JupyterLab
+# If you already have an existing installation of Jupyter/JupyterLab
+
 To install the contents of this repository, you don't need to clone it.
 
 ```bash
@@ -14,8 +14,29 @@ jupyter labextension install @jupyterlab/server-proxy
 pip3 install git+https://github.com/fonsp/pluto-on-jupyterlab.git
 ```
 
-# !!!Danger!!! This extension does *NOT* include Pluto!
-It just teaches jupyter lab how to **start** Pluto and exposes the `/pluto` endpoint.
+# Install JupyterHub, JupyterLab & Pluto.jl for your team (Advanced)
+
+Installing JupyterHub is hard.
+
+For instructions on how to install a Pluto.jl server based on JupyterHub,
+see @koehlerson detailed guide: https://www.maximiliankoehler.de/posts/pluto-server/
+
+That will help you install JupyterLab, JupyterHub and Pluto on one of your servers,
+as well as add users that will have access to JupyterHub.
+
+A use case for this is to create a server for your students/class/team.
+
+## Kubernetes setup (Very Advanced)
+For more a advanced setup you may want to follow the [Zero-To-JupyterHub](https://zero-to-jupyterhub.readthedocs.io/en/latest/) guide.
+
+To run JupyterHub with Jupyter that include this extension, you can install this extension in a Docker image that JupyterHub will use to spawn notebook servers for your users.
+
+Check the Dockerfile included below for creating Docker image that includes this extension and that can be used for your JupterHub installation.
+
+[How to configure JupyterHub to use your image](https://zero-to-jupyterhub.readthedocs.io/en/latest/administrator/optimization.html#the-images-that-will-be-pulled)
+
+
+# !!!Important!!! This extension does *NOT* include Pluto!
 
 ## Julia Installation 
 To install julia, see the official documentation.
@@ -39,7 +60,7 @@ After installing julia, you can install pluto using `Pkg`.
 You can update Pluto from Julia as you do with any Julia package.
 
 ```bash
-julia -e "import Pkg; Pkg.rm(\"Pluto\"); Pkg.add(\"Pluto\");"
+julia -e "import Pkg; Pkg.update(\"Pluto\");"
 ```
 
 # Dockerfile
